@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import newPackage as new
 def open_settings():
     print("Settings button clicked")
 
@@ -24,4 +24,5 @@ button_settings.pack(pady=5)
 button_exit = tk.Button(root, text="Exit", command=exit_app)
 button_exit.pack(pady=5)
 
+new.func()
 root.mainloop()
