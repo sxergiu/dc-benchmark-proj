@@ -1,5 +1,7 @@
 import tkinter as tk
 import newPackage as new
+
+
 def open_settings():
     print("Settings button clicked")
 
