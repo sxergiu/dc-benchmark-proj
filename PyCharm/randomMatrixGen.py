@@ -1,17 +1,30 @@
 import numpy as np
-import time
+
+""" 2 matrices per file, also 2 multiplied per process  => powers of 2
+"""
+matrix_size = (50, 50)    #size
+num_pairs = 4          #numbers of tuples
+chunk_size = 2         #numbers of matrices multiplied per process
 
 
 def write_in_file(matrix):
-    fp = open("matrixDB.txt", "a")
-    for row in matrix:
-        row_str = ' '.join(map(str, row))
-        fp.write(row_str + '\n')
-    fp.close()
+    with open("MatricesDB/test.txt", "a") as fp:
+        for row in matrix:
+            for num in row:
+                fp.write(str(num) + ' ')
+            fp.write('\n')
+        fp.write('\n')  # Add a newline between matrices
 
-def generate_matrices(low_range, high_range, number_of_mat):
+
+
+""" for how many pairs you have
+    stores in array_of_mat tuples of 2 matrices of dimension matrix_size
+"""
+def generate_matrices():   
     array_of_mat = []
-    for i in range(0, number_of_mat):
-        array_of_mat.append(np.random.randint(low_range, high_range, size=(1000, 1000)))
-        write_in_file(array_of_mat[i])
+    for _ in range(num_pairs): 
+        matrix = [(np.random.rand(*matrix_size), np.random.rand(*matrix_size))]
+        array_of_mat.append(matrix)
+        write_in_file(matrix)
+    print("This is array of mat: " + '\n' + str(array_of_mat) + '\n')
     return array_of_mat
