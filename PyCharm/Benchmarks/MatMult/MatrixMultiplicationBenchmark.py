@@ -3,7 +3,7 @@ import numpy as np
 import time
 import multiprocessing as mp    
 
-directory = "./MatricesDB/"
+directory = "PyCharm/Benchmarks/MatMult"
 
 def traverse_dirs():
     array_of_mat = []

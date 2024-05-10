@@ -1,5 +1,5 @@
 import tkinter as tk
-import ComputeMatrixMultiplication as matMult
+import PyCharm.Benchmarks.MatMult as matMult
 
 def create_result(result):
     result_panel = tk.Tk()

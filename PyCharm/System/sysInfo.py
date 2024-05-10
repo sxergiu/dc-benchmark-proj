@@ -59,7 +59,21 @@ def get_gpu():
 
     return "No GPU detected"
 
+def getSpecs():
+    processor_info = get_processor()
+    os_info = get_operating_system()
+    ram_info = get_total_ram()
+    gpu_info = get_gpu()
+
+    specs = (f"Processor Model: {processor_info}\n"
+             f"Operating System: {os_info}\n"
+             f"Total RAM: {ram_info}\n"
+             f"GPU: {gpu_info}")
+
+    return specs
+
 if __name__ == "__main__":
+
     print("Processor Model:", get_processor())
     print("Operating System:", get_operating_system())
     print("Total RAM:", get_total_ram())
