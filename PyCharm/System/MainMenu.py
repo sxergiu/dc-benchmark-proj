@@ -1,6 +1,6 @@
 import tkinter as tk
 import sys
-sys.path.append("..")
+#sys.path.append("..")
 from Benchmarks.Pi import digitsOfPi as pi
 from System import benchmark as bm
 from System import sysInfo as cs

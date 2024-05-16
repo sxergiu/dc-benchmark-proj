@@ -30,9 +30,6 @@ def write_in_file(array_of_mat):
                             fp.write(str(value) + " ")
                         fp.write("\n")
 
-
-
-
 """ for how many pairs you have
     stores in array_of_mat tuples of 2 matrices of dimension matrix_size
 """
