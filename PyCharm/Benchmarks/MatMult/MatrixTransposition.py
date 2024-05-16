@@ -28,5 +28,3 @@ def transpose_matrix_parallel(array_of_mat):
         process.join()
     return time.time()
 
-array_of_mat = matGen.generate_matrices()
-print("%s" %transpose_matrix_parallel(array_of_mat))

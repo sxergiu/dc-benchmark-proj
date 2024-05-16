@@ -9,7 +9,7 @@ def inverse_matrix(matrix, result_queue):
     result_queue.append(inverse)
 
 def inverse_matrix_parallel(array_of_mat):
-    result_queue = multiprocessing.Queue()
+    result_queue = []
     list_of_processes = []
 
     for i in range(0, len(array_of_mat)):
@@ -22,7 +22,3 @@ def inverse_matrix_parallel(array_of_mat):
     for process in list_of_processes:
         process.join()
     return time.time()
-
-array_of_mat = matGen.generate_matrices()
-start = time.time()
-print(inverse_matrix_parallel(array_of_mat) - start)
