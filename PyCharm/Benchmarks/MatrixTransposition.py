@@ -2,7 +2,6 @@ import numpy as np
 import time
 import multiprocessing
 
-
 def transpose_matrix(matrix, result_queue):
     transposed = np.transpose(matrix)
     result_queue.append(transposed)
