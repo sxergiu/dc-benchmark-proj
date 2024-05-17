@@ -32,7 +32,7 @@ def store_processes(matrix_chunk):
         #print("This is a chunk: " + '\n' + str(chunk) + '\n')  
         process = multiprocessing.Process(target=compute_dot_product, args=(chunk, result_queue))
         process.start()
-        print("This is process: ", process.pid)
+        #print("This is process: ", process.pid)
     for process in list_of_processes:
         process.join() #wait for process
 
@@ -49,16 +49,18 @@ def mat():
     times = []
     cnt = 0
     sum = 0
+
     for _ in range(number_of_tests):
         array_of_mat = matrixGen.generate_matrices()
-        start = time.time()
+        start = time.perf_counter()
         generate_chunks(array_of_mat)
         MatrixInversion.inverse_matrix_parallel(array_of_mat)
         MatrixTransposition.transpose_matrix_parallel(array_of_mat)
-        end = time.time()
+        end = time.perf_counter()
         cnt += 1
         sum += end - start
         times.append(end - start)
+    print("Time spent: ", sum)
     print("Average time is: ", sum / cnt)
 
     x_axis = []

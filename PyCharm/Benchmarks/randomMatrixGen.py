@@ -2,8 +2,8 @@ import numpy as np
 
 """ 2 matrices per file, also 2 multiplied per process  => powers of 2
 """
-list_of_tuples_size = (32, 32)    #size
-num_pairs = 16         #numbers of tuples
+list_of_tuples_size = (512, 512)    #size
+num_pairs = 4         #numbers of tuples
 chunk_size = 2         #numbers of matrices multiplied per process
 
 
