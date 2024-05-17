@@ -62,6 +62,12 @@ def plot_results(results):
 
     print(results)
 
+def res_to_string(results):
+    formatted_results = ""
+    for key, value in results.items():
+        formatted_results += f"{key}: {value}\n"
+    return formatted_results
+
 if __name__ == "__main__":
-    results = memory_read_write_speed_test(size_mb)
+    results = memory_read_write_speed_test()
     plot_results(results)
