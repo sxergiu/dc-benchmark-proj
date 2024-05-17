@@ -2,14 +2,14 @@ import numpy as np
 
 """ 2 matrices per file, also 2 multiplied per process  => powers of 2
 """
-list_of_tuples_size = (32, 32)    #size
+list_of_tuples_size = (4,4)    #size
 num_pairs = 16         #numbers of tuples
 chunk_size = 2         #numbers of matrices multiplied per process
 
 
 def hasContentFile():
-    #with open("dc-benchmark-proj\\MatricesDB\\test.txt", "r") as fp: #for windows
-    with open("MatricesDB/test.txt", "r") as fp: #for linux
+    with open("C:\\Users\\User\\PycharmProjects\\BenchmarkProject\\dc-benchmark-proj\\MatricesDB\\test.txt", "r") as fp: #for windows
+    #with open("MatricesDB/test.txt", "r") as fp: #for linux
         first_char = fp.read(1)
         if not first_char:
             return False
@@ -21,7 +21,7 @@ def write_in_file(array_of_mat):
     else:
         mode = "a+"
 
-    with open("MatricesDB/test.txt", mode) as fp:
+    with open("C:\\Users\\User\\PycharmProjects\\BenchmarkProject\\dc-benchmark-proj\\MatricesDB\\test.txt", mode) as fp:
         for list_of_tuples in array_of_mat:
             for tuple in list_of_tuples:
                 for matrix in tuple:

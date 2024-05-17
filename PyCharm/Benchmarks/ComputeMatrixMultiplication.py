@@ -6,7 +6,6 @@ import MatrixInversion
 import MatrixTransposition
 import matplotlib.pyplot as plt
 
-
 number_of_tests = 20
 
 """ takes from array_of_mat tuples from current index to i + chunk_size - 1

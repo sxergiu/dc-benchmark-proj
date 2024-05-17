@@ -2,7 +2,6 @@ import numpy as np
 import time
 import multiprocessing
 
-
 def inverse_matrix(matrix, result_queue):
     inverse = np.linalg.inv(matrix)
     result_queue.append(inverse)

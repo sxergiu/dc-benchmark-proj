@@ -1,15 +1,9 @@
-import numpy as np
-import time
 import ComputeMatrixMultiplication as compMat
-import multiprocessing
-import randomMatrixGen as matrixGen
-import MatrixInversion
-import MatrixTransposition
 import digitsOfPi as pi
-import matplotlib.pyplot as plt
 import tkinter as tk
 import sysInfo as cs
-import threading  # Import threading for handling long-running tasks
+import threading
+import ramRWSpeed as rw
 
 
 specs = cs.getSpecs()
@@ -43,18 +37,31 @@ def compute_pi():
             raise ValueError("Number of digits must be a positive integer.")
 
         time_taken = pi.benchmark_pi(digits)  # Call the function from the imported module
-        result_label.config(text=f"Time taken to calculate Pi with {digits} digits: {time_taken} seconds")
+        resultPI_label.config(text=f"Time taken to calculate Pi with {digits} digits: {time_taken} seconds")
     except ValueError as e:
-        result_label.config(text=str(e))
+        resultPI_label.config(text=str(e))
 
 def compute_matrix_multip():
-    result_label.config(text="Computing matrix operations...")
+    resultMat_label.config(text="Computing matrix operations...")
     thread = threading.Thread(target=mat_wrapper)  # Use a thread to run mat() function
     thread.start()
 
 def mat_wrapper():
     compMat.mat()
-    result_label.config(text="Matrix operations completed.")
+    resultMat_label.config(text="Matrix operations completed.")
+
+
+def compute_rw():
+    try:
+        digits = int(mb_entry.get())
+        if digits <= 0:
+            raise ValueError("Number of MB must be a positive integer.")
+
+        speed = rw.memory_read_write_speed_test()
+        resultRW_label.config(text=speed)
+        
+    except ValueError as e:
+        resultRW_label.config(text=str(e))
 
 """def compute_matrix_multip():
     compMat.mat()
@@ -67,14 +74,30 @@ digits_label.pack()
 digits_entry = tk.Entry(content2)
 digits_entry.pack()
 
-result_label = tk.Label(content2, text="")
-result_label.pack()
-
 compute_pi_button = tk.Button(content2, text="Compute Pi", command=compute_pi)
 compute_pi_button.pack()
 
+resultPI_label = tk.Label(content2, text="")
+resultPI_label.pack()
+
 compute_matrix_multip_button = tk.Button(content2, text="Compute Matrix", command=compute_matrix_multip)
 compute_matrix_multip_button.pack()
+
+resultMat_label = tk.Label(content2, text="")
+resultMat_label.pack()
+
+mb_label = tk.Label(content2, text="Enter the number of MB to benchmark:")
+mb_label.pack()
+
+mb_entry = tk.Entry(content2)
+mb_entry.pack()
+
+compute_speed_button = tk.Button(content2, text="Read/Write speed", command=compute_rw)
+compute_speed_button.pack()
+
+resultRW_label = tk.Label(content2, text="")
+resultRW_label.pack()
+
 
 # Content 3 - Computer Specs
 content3 = tk.Frame(root)
