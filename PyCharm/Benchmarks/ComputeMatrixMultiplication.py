@@ -31,9 +31,8 @@ def store_processes(matrix_chunk):
     for chunk in matrix_chunk:
         #print("This is a chunk: " + '\n' + str(chunk) + '\n')  
         process = multiprocessing.Process(target=compute_dot_product, args=(chunk, result_queue))
-        list_of_processes.append(process)
         process.start()
-
+        print("This is process: ", process.pid)
     for process in list_of_processes:
         process.join() #wait for process
 
@@ -42,12 +41,11 @@ def store_processes(matrix_chunk):
     then
 """
 def compute_dot_product(chunk, result_queue):
-    results = []
         #print("This is a matrix pair: " + '\n' + str(matrix_pair) + '\n')  
     result = np.dot(chunk[0], chunk[1])
-    results.append(result)
+    result_queue.append(result)
 
-if __name__ == "__main__":
+def mat():
     times = []
     cnt = 0
     sum = 0
@@ -76,3 +74,5 @@ if __name__ == "__main__":
     plt.title("Matrix operations results")
     plt.show()
 
+if __name__ == "__main__":
+    mat()
