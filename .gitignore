@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+MatricesDB/test.txt
 # Distribution / packaging
 .Python
 build/

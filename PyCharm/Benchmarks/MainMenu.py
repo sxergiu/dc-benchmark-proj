@@ -7,10 +7,21 @@ import ramRWSpeed as rw
 
 specs = cs.getSpecs()
 
+button_font = ("Lucida Console", 12)
+text_font = ("Tahoma", 14)
+
+# Hover effects
+def on_enter(e):
+    e.widget['background'] = '#a0a0a0'
+
+def on_leave(e):
+    e.widget['background'] = '#d0d0d0'
+
 # Create the main window
 root = tk.Tk()
 root.title("Benchmarks of The Unnamed")
-root.geometry("800x600")  # Set a fixed window size for better control
+root.geometry("1200x600")  # Set a fixed window size for better control
+root.configure(bg="#B6B2B9")
 
 # Function to switch the content based on the button clicked
 def switch_content(content):
@@ -19,14 +30,14 @@ def switch_content(content):
     globals()['current_content'] = content
 
 # Define default content
-default_content = tk.Frame(root)
-default_label = tk.Label(default_content, text='"The Unnamed Benchmark" is a comprehensive application developed by a group of students\n aimed at benchmarking computer system\'s RAM and CPU performance.\n The application employs various computational tasks to evaluate system capabilities,\n including matrix multiplication, inversions, and transpositions,\nalong with sequential and random reading and writing operations.\n Additionally, the application incorporates computations involving\n digits of pi to further stress test the system\'s processing capabilities. \nBy executing these tasks, users can gain insights into their system\'s performance under different\ncomputational workloads, aiding in system optimization and performance tuning.')
-default_label.pack(fill=tk.BOTH, expand=True)
+default_content = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
+default_label = tk.Label(default_content, text='"The Unnamed Benchmark" is a comprehensive application developed by a group of students\n aimed at benchmarking computer system\'s RAM and CPU performance.\n The application employs various computational tasks to evaluate system capabilities,\n including matrix multiplication, inversions, and transpositions,\nalong with sequential and random reading and writing operations.\n Additionally, the application incorporates computations involving\n digits of pi to further stress test the system\'s processing capabilities. \nBy executing these tasks, users can gain insights into their system\'s performance under different\ncomputational workloads, aiding in system optimization and performance tuning.', font=text_font, bg="#ffffff")
+default_label.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 # Content 1 - About the App
-content1 = tk.Frame(root)
-label1 = tk.Label(content1, text='Metodele de benchmark folosite/ cum functioneaza scorul')
-label1.pack(fill=tk.BOTH, expand=True)
+content1 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
+label1 = tk.Label(content1, text='Metodele de benchmark folosite/ cum functioneaza scorul', font=text_font, bg='white')
+label1.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 # Content 2 - Benchmarking
 
@@ -78,7 +89,7 @@ def compute_rw():
 # Function to show Pi section
 def show_pi_section():
     display_pi_button.pack_forget()
-    pi_section.place(x=370, y=300)
+    pi_section.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
     display_rw_button.config(state=tk.DISABLED)
     compute_matrix_multip_button.config(state=tk.DISABLED)
 
@@ -92,7 +103,7 @@ def hide_pi_section():
 # Function to show Read/Write Speed section
 def show_rw_section():
     display_rw_button.pack_forget()
-    rw_section.place(x=370, y=300)
+    rw_section.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
     display_pi_button.config(state=tk.DISABLED)
     compute_matrix_multip_button.config(state=tk.DISABLED)
 
@@ -103,75 +114,75 @@ def hide_rw_section():
     display_pi_button.config(state=tk.NORMAL)
     compute_matrix_multip_button.config(state=tk.NORMAL)
 
-content2 = tk.Frame(root)
+content2 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
 
 # Benchmark buttons frame
-benchmark_buttons_frame = tk.Frame(content2)
+benchmark_buttons_frame = tk.Frame(content2, bg="#9300FF")
 benchmark_buttons_frame.pack()
 
 # Matrix Multiplication section
-compute_matrix_multip_button = tk.Button(benchmark_buttons_frame, text="Compute Matrix Multiplication", command=compute_matrix_multip)
-compute_matrix_multip_button.pack()
+compute_matrix_multip_button = tk.Button(benchmark_buttons_frame, text="Compute Matrix Multiplication", command=compute_matrix_multip, bg="#d0d0d0", font=button_font)
+compute_matrix_multip_button.pack(pady=5)
 
-resultMat_label = tk.Label(content2, text="")
-resultMat_label.pack()
+resultMat_label = tk.Label(content2, text="", bg="#9300FF", font=text_font)
+resultMat_label.pack(pady=5)
 
 # Button to display Pi section
-display_pi_button = tk.Button(benchmark_buttons_frame, text="Pi", command=show_pi_section)
-display_pi_button.pack()
+display_pi_button = tk.Button(benchmark_buttons_frame, text="Pi", command=show_pi_section, bg="#d0d0d0", font=button_font)
+display_pi_button.pack(pady=5)
 
 # Pi section
-pi_section = tk.Frame(root)
+pi_section = tk.Frame(content2, borderwidth=2, bg="#ffffff", bd=2, relief="groove")
 
-digits_label = tk.Label(pi_section, text="Enter the number of digits of Pi to calculate:")
+digits_label = tk.Label(pi_section, text="Enter the number of digits of Pi to calculate:", font=text_font, bg="#ffffff")
 digits_label.pack()
 
-digits_entry = tk.Entry(pi_section)
+digits_entry = tk.Entry(pi_section, font=("Arial", 12))
 digits_entry.pack()
 
-compute_pi_button = tk.Button(pi_section, text="Compute Pi", command=compute_pi)
-compute_pi_button.pack()
+compute_pi_button = tk.Button(pi_section, text="Compute Pi", command=compute_pi, bg="#d0d0d0", font=button_font)
+compute_pi_button.pack(pady=5)
 
-compute_pi_button2 = tk.Button(pi_section, text="Plot Powers of Pi", command=compute_pi_powers)
-compute_pi_button2.pack()
+compute_pi_button2 = tk.Button(pi_section, text="Plot Powers of Pi", command=compute_pi_powers, bg="#d0d0d0", font=button_font)
+compute_pi_button2.pack(pady=5)
 
-resultPI_label = tk.Label(pi_section, text="")
-resultPI_label.pack()
+resultPI_label = tk.Label(pi_section, text="", font=text_font, bg="#ffffff")
+resultPI_label.pack(pady=5)
 
-cancel_pi_button = tk.Button(pi_section, text="Cancel", command=hide_pi_section)
-cancel_pi_button.pack()
+cancel_pi_button = tk.Button(pi_section, text="Cancel", command=hide_pi_section, bg="#d0d0d0", font=button_font)
+cancel_pi_button.pack(pady=5)
 
 # Button to display Read/Write Speed section
-display_rw_button = tk.Button(benchmark_buttons_frame, text="Read/Write Speed", command=show_rw_section)
-display_rw_button.pack()
+display_rw_button = tk.Button(benchmark_buttons_frame, text="Read/Write Speed", command=show_rw_section, bg="#d0d0d0", font=button_font)
+display_rw_button.pack(pady=5)
 
 # Read/Write Speed section
-rw_section = tk.Frame(root)
+rw_section = tk.Frame(content2, borderwidth=2, bg="#ffffff", bd=2, relief="groove")
 
-mb_label = tk.Label(rw_section, text="Enter the number of MB to benchmark:")
+mb_label = tk.Label(rw_section, text="Enter the number of MB to benchmark:", font=text_font, bg="#ffffff")
 mb_label.pack()
 
-mb_entry = tk.Entry(rw_section)
+mb_entry = tk.Entry(rw_section, font=("Arial", 12))
 mb_entry.pack()
 
-compute_speed_button = tk.Button(rw_section, text="Compute Read/Write Speed", command=compute_rw)
-compute_speed_button.pack()
+compute_speed_button = tk.Button(rw_section, text="Compute Read/Write Speed", command=compute_rw, bg="#d0d0d0", font=button_font)
+compute_speed_button.pack(pady=5)
 
-resultRW_label = tk.Label(rw_section, text="")
-resultRW_label.pack()
+resultRW_label = tk.Label(rw_section, text="", font=text_font, bg="#ffffff")
+resultRW_label.pack(pady=5)
 
-cancel_rw_button = tk.Button(rw_section, text="Cancel", command=hide_rw_section)
-cancel_rw_button.pack()
+cancel_rw_button = tk.Button(rw_section, text="Cancel", command=hide_rw_section, bg="#d0d0d0", font=button_font)
+cancel_rw_button.pack(pady=5)
 
 # Content 3 - Computer Specs
-content3 = tk.Frame(root)
-label3 = tk.Label(content3, text='Current Specs: \n' + str(specs))
-label3.pack(fill=tk.BOTH, expand=True)
+content3 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
+label3 = tk.Label(content3, text='Current Specs: \n' + str(specs), font=text_font, bg="#ffffff")
+label3.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 # Content 4 - History
-content4 = tk.Frame(root)
-label4 = tk.Label(content4, text='Istoric')
-label4.pack(fill=tk.BOTH, expand=True)
+content4 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
+label4 = tk.Label(content4, text='Istoric', font=text_font, bg="#ffffff")
+label4.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 # Function to exit the application
 def exit_app():
@@ -183,21 +194,28 @@ default_content.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 current_content = default_content
 
 # Create a frame for button list
-button_frame = tk.Frame(root)
+button_frame = tk.Frame(root, bg="#B6B2B9")
 button_frame.pack(side=tk.LEFT, fill=tk.Y)
 
 # Buttons for navigation
-button1 = tk.Button(button_frame, text='About the app', command=lambda: switch_content(content1))
-button2 = tk.Button(button_frame, text='Benchmarking', command=lambda: switch_content(content2))
-button3 = tk.Button(button_frame, text='Computer Information', command=lambda: switch_content(content3))
-button4 = tk.Button(button_frame, text='History', command=lambda: switch_content(content4))
-button5 = tk.Button(button_frame, text="Exit", command=exit_app)
-
-button_list = [button1, button2, button3, button4, button5]
+button1 = tk.Button(button_frame, text='About the app', command=lambda: switch_content(content1), bg="#d0d0d0", font=button_font)
+button2 = tk.Button(button_frame, text='Benchmarking', command=lambda: switch_content(content2), bg="#d0d0d0", font=button_font)
+button3 = tk.Button(button_frame, text='Computer Information', command=lambda: switch_content(content3), bg="#d0d0d0", font=button_font)
+button4 = tk.Button(button_frame, text='History', command=lambda: switch_content(content4), bg="#d0d0d0", font=button_font)
+exit_button = tk.Button(button_frame, text='Exit', command=exit_app, bg="#d0d0d0", font=button_font)
 
 # Pack buttons
-for button in button_list:
-    button.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+button1.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+button2.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+button3.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+button4.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+exit_button.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
 
-if __name__ == "__main__":
+# Bind hover effects to buttons
+buttons = [button1, button2, button3, button4, exit_button, compute_matrix_multip_button, display_pi_button, compute_pi_button, compute_pi_button2, cancel_pi_button, display_rw_button, compute_speed_button, cancel_rw_button]
+for btn in buttons:
+    btn.bind("<Enter>", on_enter)
+    btn.bind("<Leave>", on_leave)
+
+if __name__ == '__main__':
     root.mainloop()
