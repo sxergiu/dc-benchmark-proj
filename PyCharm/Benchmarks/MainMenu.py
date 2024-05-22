@@ -13,7 +13,7 @@ import plotting as plot
 from PIL import Image, ImageTk
 
 if __name__ == '__main__':
-    image = Image.open("islam.png")
+    image = Image.open("PyCharm\\Benchmarks\\islam.png")
     image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
 
     specsString, specsInfo = cs.get_system_info()
@@ -106,6 +106,7 @@ if __name__ == '__main__':
     def mat_wrapper():
         global times
         times = compMat.mat()
+        
 
     def remove_canvas(widget):
         widget.pack_forget()
