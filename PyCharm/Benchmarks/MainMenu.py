@@ -19,7 +19,7 @@ if __name__ == '__main__':
     specsString, specsInfo = cs.get_system_info()
 
     button_font = ("Lucida Console", 12)
-    text_font = ("Tahoma", 14)
+    text_font = ("Tahoma", 16)
 
     # Hover effects
     def on_enter(e):
@@ -51,9 +51,11 @@ if __name__ == '__main__':
 
 
     # Content 1 - About the App
-    content1 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
+    content1 = tk.Frame(root, bg="#9300FF", bd=100, relief="groove")
 
-    label1 = tk.Label(content1, text='Metodele de benchmark folosite/ cum functioneaza scorul', font=text_font, bg='#9300FF')
+    about = ("The Unnamed Benchmark\nBenchmarking app for the CPU and RAM memory\nUsing Matrix Multiplication in parallel processes,\nMatrix Inversion,Transposition\nDigits and powers of Pi computation\nRandom and Sequential reading and writing\nSee your current specs and get a score!\nCompare them with others in history!\nAnd don't forget... Lower is better!\n")
+
+    label1 = tk.Label(content1, text=about, font=("Lucida Console",18), bg='#9300FF')
     label1.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
     # Content 2 - Benchmarking
@@ -125,7 +127,7 @@ if __name__ == '__main__':
             mb = int(mb_entry.get())
             if mb <= 0:
                 raise ValueError("Number of MB must be a positive integer.")
-            speed = rw.memory_read_write_speed_test()
+            speed = rw.memory_read_write_speed_test(mb)
             resultRW_label.config(text=rw.res_to_string(speed))
         except ValueError as e:
             resultRW_label.config(text=str(e))
@@ -249,14 +251,17 @@ if __name__ == '__main__':
 
     # Content 3 - Computer Specs
     content3 = tk.Frame(root, bg="#9300FF", bd=150, relief="groove")
-    label3 = tk.Label(content3, text='Current Specs: \n' + str(specsString), font=text_font, bg="#ffffff")
+    label3 = tk.Label(content3, text='Current Specs: \n' + str(specsString), font=("Lucida Console",12), bg="#ffffff")
     label3.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
     # Content 4 - History
 
     def updateHistory():
+
+        for item in tree.get_children():
+            tree.delete(item)
+
         history_entries = hs.read_history_csv()
-        # Insert data into the Treeview
         if history_entries:
             for entry in history_entries:
                 tree.insert("", "end", values=entry)
