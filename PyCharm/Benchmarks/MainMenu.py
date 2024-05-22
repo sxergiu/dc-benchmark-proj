@@ -133,7 +133,7 @@ if __name__ == '__main__':
             mb = int(mb_entry.get())
             if mb <= 0:
                 raise ValueError("Number of MB must be a positive integer.")
-            speed = rw.memory_read_write_speed_test(mb)
+            speed,_ = rw.memory_read_write_speed_test(mb)
             fig = plot.plotRW(speed)
             display_plot(fig)
             resultRW_label.config(text=rw.res_to_string(speed))

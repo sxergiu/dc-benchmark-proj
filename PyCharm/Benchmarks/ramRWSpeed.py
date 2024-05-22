@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 size_mb = 100
 
 def memory_read_write_speed_test(mb):
+
+    times = []
     size_mb = mb
     size = size_mb * 1024 * 1024 // 8  # Convert MB to number of 8-byte doubles
     array = np.zeros(size, dtype=np.float64)

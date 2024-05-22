@@ -7,7 +7,7 @@ def score():
 
     mat_op_times = compMat.mat()
     pi_op_times, time_for_pi_digits = compPi.powers_of_pi(digits)
-    _, ram_times = ramTest()
+    _, ram_times = ramTest(100)
 
     max_mat_time = max(mat_op_times)
     max_pi_time = max(pi_op_times)
