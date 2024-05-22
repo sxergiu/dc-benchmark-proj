@@ -1,8 +1,10 @@
 import tkinter as tk
+from tkinter import ttk
 import threading
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+import displayHistory as hs
 import ComputeMatrixMultiplication as compMat
 import digitsOfPi as pi
 import sysInfo as cs
@@ -226,8 +228,27 @@ if __name__ == '__main__':
 
     # Content 4 - History
     content4 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
-    label4 = tk.Label(content4, text='Istoric', font=text_font, bg="#ffffff")
-    label4.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+    label4 = tk.Label(content4, text='History', font=text_font, bg="#ffffff")
+    label4.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+    style = ttk.Style()
+    style.configure("Treeview", background="#9300FF", font=text_font, borderwidth=2, relief="groove")
+    tree = ttk.Treeview(content4, columns=("OS", "RAM", "CPU", "GPU", "SCORE"), show="headings",style="Treeview")
+
+    tree.heading("OS", text="OS")
+    tree.heading("RAM", text="RAM")
+    tree.heading("CPU", text="CPU")
+    tree.heading("GPU", text="GPU")
+    tree.heading("SCORE", text="SCORE")
+
+    history_entries = hs.read_history_csv()
+    # Insert data into the Treeview
+    if history_entries:
+        for entry in history_entries:
+            tree.insert("", "end", values=entry)
+
+    # Pack the Treeview
+    tree.pack(expand=True, fill="both")
 
     # Function to exit the application
     def exit_app():
