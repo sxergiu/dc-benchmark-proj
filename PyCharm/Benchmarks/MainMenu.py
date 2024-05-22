@@ -267,14 +267,14 @@ if __name__ == '__main__':
     tree = ttk.Treeview(content4, columns=("OS", "RAM", "CPU", "GPU", "SCORE"), show="headings",style="Treeview")
 
     tree.heading("OS", text="OS")
-    tree.heading("RAM", text="RAM")
-    tree.heading("CPU", text="CPU")
+    tree.heading("CPU", text="RAM")
+    tree.heading("RAM", text="CPU")
     tree.heading("GPU", text="GPU")
     tree.heading("SCORE", text="SCORE")
 
     tree.column("OS", anchor=tk.CENTER, width=5)
-    tree.column("RAM", anchor=tk.CENTER, width=5)
-    tree.column("CPU", anchor=tk.CENTER, width=150)
+    tree.column("CPU", anchor=tk.CENTER, width=5)
+    tree.column("RAM", anchor=tk.CENTER, width=150)
     tree.column("GPU", anchor=tk.CENTER, width=150)
     tree.column("SCORE", anchor=tk.CENTER, width=5)
 
