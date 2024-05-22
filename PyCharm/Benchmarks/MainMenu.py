@@ -66,7 +66,7 @@ if __name__ == '__main__':
             digits = int(digits_entry.get())
             if digits <= 0:
                 raise ValueError("Number of digits must be a positive integer.")
-            time_taken = pi.benchmark_pi(digits)  # Call the function from the imported module
+            time_taken = pi.benchmark_pi(digits)
             resultPI_label.config(text=f"Time taken to calculate Pi with {digits} digits: {time_taken} seconds")
         except ValueError as e:
             resultPI_label.config(text=str(e))
@@ -113,6 +113,11 @@ if __name__ == '__main__':
     def remove_canvas(widget):
         widget.pack_forget()
 
+
+    def hide_frame(frame, time_ms):
+        frame.pack_forget()
+        frame.after(time_ms, lambda: frame.pack(fill=tk.BOTH, expand=True))
+
     def display_plot(fig):
         canvas = FigureCanvasTkAgg(fig, master=content2)
         canvas.draw()
@@ -121,6 +126,7 @@ if __name__ == '__main__':
 
         root.after(15000, remove_canvas, canvas_widget)
 
+
     # Function to compute Read/Write Speed
     def compute_rw():
         try:
@@ -128,6 +134,8 @@ if __name__ == '__main__':
             if mb <= 0:
                 raise ValueError("Number of MB must be a positive integer.")
             speed = rw.memory_read_write_speed_test(mb)
+            fig = plot.plotRW(speed)
+            display_plot(fig)
             resultRW_label.config(text=rw.res_to_string(speed))
         except ValueError as e:
             resultRW_label.config(text=str(e))

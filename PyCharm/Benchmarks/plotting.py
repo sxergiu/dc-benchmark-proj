@@ -18,6 +18,25 @@ def plotMat(times, number_of_tests):
 
     return fig
 
+def plotRW(results):
+    operations = list(results.keys())
+    times = list(results.values())
+
+    fig, ax = plt.subplots()
+    bars = ax.bar(operations, times, color=['blue', 'green', 'red', 'orange'])
+
+    ax.set_xlabel('Operation')
+    ax.set_ylabel('Time (seconds)')
+    ax.set_title('Memory Read/Write Speed Test')
+    ax.bar_label(bars)
+
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+    print(results)
+    return fig
+
 def plotPi(times):
         x_axis = []
         y_axis = []

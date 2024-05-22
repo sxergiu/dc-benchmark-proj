@@ -46,24 +46,6 @@ def memory_read_write_speed_test(mb):
 
     return results
 
-def plot_results(results):
-    operations = list(results.keys())
-    times = list(results.values())
-
-    fig, ax = plt.subplots()
-    bars = ax.bar(operations, times, color=['blue', 'green', 'red', 'orange'])
-
-    ax.set_xlabel('Operation')
-    ax.set_ylabel('Time (seconds)')
-    ax.set_title('Memory Read/Write Speed Test')
-    ax.bar_label(bars)
-
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
-
-    print(results)
-
 def res_to_string(results):
     formatted_results = ""
     for key, value in results.items():
@@ -72,4 +54,3 @@ def res_to_string(results):
 
 if __name__ == "__main__":
     results = memory_read_write_speed_test()
-    plot_results(results)
