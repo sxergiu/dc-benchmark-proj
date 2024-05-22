@@ -14,7 +14,7 @@ from PIL import Image, ImageTk
 
 if __name__ == '__main__':
     image = Image.open("islam.png")
-    image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
+    image = image.resize((1250, 900))  # Use Image.LANCZOS for high-quality resizing
 
     specsString, specsInfo = cs.get_system_info()
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # Create the main window
     root = tk.Tk()
     root.title("Benchmarks of The Unnamed")
-    root.geometry("1200x600")  # Set a fixed window size for better control
+    root.geometry("1200x800")  # Set a fixed window size for better control
     root.configure(bg="#B6B2B9")
     bg_image = ImageTk.PhotoImage(image)
 
