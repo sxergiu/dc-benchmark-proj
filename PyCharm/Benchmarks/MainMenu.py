@@ -103,6 +103,7 @@ if __name__ == '__main__':
     def mat_wrapper():
         global times
         times = compMat.mat()
+        
 
     def remove_canvas(widget):
         widget.pack_forget()

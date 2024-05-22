@@ -1,7 +1,7 @@
 import time
 import mpmath
 
-start_benchmark = 1000
+start_benchmark = 5000
 start_benchmark = int(start_benchmark)
 repeat_benchmark = 10
 repeat_benchmark = int(10)
@@ -14,12 +14,14 @@ def benchmark_pi(digits):
     return end_time - start_time
 
 def get_pi(digits):
+    t1 = time.perf_counter()
     mpmath.mp.dps = digits
     pi_value = str(mpmath.mp.pi)
-    return pi_value
+    t2 = time.perf_counter()
+    return pi_value, t2 - t1
 
 def powers_of_pi(digits):
-    pi = get_pi(digits)
+    pi, time_for_pi_digits = get_pi(digits)
     pi = float(pi)
     average = 0
     times = []
@@ -42,7 +44,7 @@ def powers_of_pi(digits):
         print('Time: ' + str(duration) + 's')
     average = round(average / repeat_benchmark, 3)
     print('Average (from {} repeats): {}s'.format(repeat_benchmark, average))
-    return times
+    return times, time_for_pi_digits
 
     
 if __name__ == "__main__":
