@@ -43,37 +43,3 @@ def compute_dot_product(chunk, result_queue):
         #print("This is a matrix pair: " + '\n' + str(matrix_pair) + '\n')  
     result = np.dot(chunk[0], chunk[1])
     result_queue.append(result)
-
-def mat():
-    times = []
-    cnt = 0
-    sum = 0
-
-    for _ in range(number_of_tests):
-        array_of_mat = matrixGen.generate_matrices()
-        start = time.perf_counter()
-        generate_chunks(array_of_mat)
-        MatrixInversion.inverse_matrix_parallel(array_of_mat)
-        MatrixTransposition.transpose_matrix_parallel(array_of_mat)
-        end = time.perf_counter()
-        cnt += 1
-        sum += end - start
-        times.append(end - start)
-    print("Time spent: ", sum)
-    print("Average time is: ", sum / cnt)
-
-    x_axis = []
-    y_axis = []
-    for x_value in range(1, number_of_tests + 1):
-        x_axis.append(x_value)
-    for y_value in times:
-        y_axis.append(y_value)
-    
-    plt.plot(x_axis, y_axis)
-    plt.xlabel("x axix")
-    plt.ylabel("y axis")
-    plt.title("Matrix operations results")
-    plt.show()
-
-if __name__ == "__main__":
-    mat()

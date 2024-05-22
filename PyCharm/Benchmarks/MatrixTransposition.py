@@ -1,3 +1,4 @@
+import multiprocessing.managers
 import numpy as np
 import time
 import multiprocessing

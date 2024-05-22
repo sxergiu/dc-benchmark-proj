@@ -1,20 +1,46 @@
-import tkinter as tk
-import PyCharm.Benchmarks.MatMult as matMult
+import numpy as np
+import time
+import multiprocessing
+import randomMatrixGen as matrixGen
+import MatrixInversion
+import MatrixTransposition
+import matplotlib.pyplot as plt
+from ComputeMatrixMultiplication import generate_chunks
 
-def create_result(result):
-    result_panel = tk.Tk()
-    result_panel.title("Time")
 
-    result_label = tk.Label(result_panel, text=str(result))
-    result_label.pack()
-    result_panel.mainloop()
+number_of_tests = 2
 
-def compute_commands(low_entry, high_entry, size_entry):
-    low = int(low_entry.get())
-    high = int(high_entry.get())
-    size = int(size_entry.get())
+def mat():
+    times = []
+    cnt = 0
+    sum = 0
 
-    array_of_mat = matMult.generate_matrices(low, high, size)
-    res = matMult.compute_dot_product(array_of_mat)
-    create_result(res)
+    array_of_mat = matrixGen.generate_matrices()
+    for _ in range(number_of_tests):
+        start = time.perf_counter()
+        generate_chunks(array_of_mat)
+        MatrixInversion.inverse_matrix_parallel(array_of_mat)
+        MatrixTransposition.transpose_matrix_parallel(array_of_mat)
+        end = time.perf_counter()
+        cnt += 1
+        sum += end - start
+        times.append(end - start)
+    print("Time spent: ", sum)
+    print("Average time is: ", sum / cnt)
 
+    x_axis = []
+    y_axis = []
+    for x_value in range(1, number_of_tests + 1):
+        x_axis.append(x_value)
+    for y_value in times:
+        y_axis.append(y_value)
+    
+    plt.plot(x_axis, y_axis)
+    plt.xlabel("x axix")
+    plt.ylabel("y axis")
+    plt.title("Matrix operations results")
+    plt.show()
+
+if __name__ == "__main__":
+    #multiprocessing.freeze_support()
+    mat()

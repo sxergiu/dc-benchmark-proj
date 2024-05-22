@@ -5,11 +5,13 @@ import digitsOfPi as pi
 import sysInfo as cs
 import ramRWSpeed as rw
 from PIL import Image, ImageTk
+import benchmark as bk
+
 
 image = Image.open("C:\\Users\\cristi\\Desktop\\DC_project\\dc-benchmark-proj\\PyCharm\\Benchmarks\\islam.png")
 image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
 
-specs = cs.getSpecs()
+specs = cs.get_system_info()
 
 button_font = ("Lucida Console", 12)
 text_font = ("Tahoma", 14)
@@ -80,7 +82,7 @@ def compute_matrix_multip():
     thread.start()
 
 def mat_wrapper():
-    compMat.mat()
+    bk.mat()
     resultMat_label.config(text="Matrix operations completed.")
     display_pi_button.config(state=tk.NORMAL)
     display_rw_button.config(state=tk.NORMAL)

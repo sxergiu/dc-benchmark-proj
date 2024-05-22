@@ -85,3 +85,5 @@ def get_system_info():
 
 if __name__ == "__main__":
     print(get_system_info())
+
+print("a")
