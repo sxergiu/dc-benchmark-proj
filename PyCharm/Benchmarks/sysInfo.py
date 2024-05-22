@@ -1,6 +1,8 @@
 import platform
 import subprocess
 import psutil
+import pandas as pd
+
 
 def get_os_info():
     """Get the operating system information."""
@@ -81,9 +83,20 @@ def get_system_info():
     cpu_info = get_cpu_info()
     gpu_info = get_gpu_info()
 
-    return f"Operating System: {os_info}\nTotal RAM: {ram_info}\nCPU: {cpu_info}\nGPU: {gpu_info}"
+    info = [os_info, cpu_info, ram_info, gpu_info]
+    write_in_file(info)
+    return f"Operating System: {os_info}\nCPU: {cpu_info}\nTotal RAM: {ram_info}\nGPU: {gpu_info}"
+
+def write_in_file(info):
+    header = ['Operating system', 'CPU', 'Total RAM', 'GPU']
+    try:
+        existing_data = pd.read_csv("History.csv")
+    except FileNotFoundError:
+        existing_data = pd.DataFrame(columns=header)
+
+    new_data = pd.DataFrame([info], columns=header)
+    new_data.to_csv("History.csv", mode='a', header=False, index=False)
 
 if __name__ == "__main__":
-    print(get_system_info())
-
-print("a")
+    get_system_info()  # Get the system information
+    #write_in_file(system_info)  # Write the system information to the file
