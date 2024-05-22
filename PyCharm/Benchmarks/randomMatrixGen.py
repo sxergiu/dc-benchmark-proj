@@ -2,7 +2,7 @@ import numpy as np
 
 """ 2 matrices per file, also 2 multiplied per process  => powers of 2
 """
-list_of_tuples_size = (2, 2)    #size
+list_of_tuples_size = (4, 4)    #size
 num_pairs = 4         #numbers of tuples
 chunk_size = 2         #numbers of matrices multiplied per process
 

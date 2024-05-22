@@ -14,7 +14,7 @@ if __name__ == '__main__':
     image = Image.open("islam.png")
     image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
 
-    specs = cs.getSpecs()
+    specs = cs.get_system_info()
 
     button_font = ("Lucida Console", 12)
     text_font = ("Tahoma", 14)
@@ -78,21 +78,30 @@ if __name__ == '__main__':
 
 
     # Function to compute Matrix Multiplication
+
+    times = None
     def compute_matrix_multip():
-        resultMat_label.config(text="Computing matrix operations...")
-        display_pi_button.config(state=tk.DISABLED)
-        display_rw_button.config(state=tk.DISABLED)
+
         thread = threading.Thread(target=mat_wrapper)  # Use a thread to run mat() function
         thread.start()
 
-    def mat_wrapper():
-        times = compMat.mat()
-        fig = plot.plotMat(times, compMat.number_of_tests)
-        resultMat_label.config(text="Matrix operations completed.")
-        root.after(0, display_plot, fig)
+        thread.join()
 
-        display_pi_button.config(state=tk.NORMAL)
-        display_rw_button.config(state=tk.NORMAL)
+        if times is not None:
+            fig = plot.plotMat(times, compMat.number_of_tests)
+            resultMat_label.config(text="Matrix operations completed.")
+            root.after(0, display_plot, fig)
+
+            resultMat_label.after(10000,matLabel())
+
+            display_pi_button.config(state=tk.NORMAL)
+            display_rw_button.config(state=tk.NORMAL)
+        else:
+            resultMat_label.config(text="Matrix operations FAILURE.")
+
+    def mat_wrapper():
+        global times
+        times = compMat.mat()
 
     def remove_canvas(widget):
         widget.pack_forget()
@@ -156,6 +165,9 @@ if __name__ == '__main__':
     # Matrix Multiplication section
     compute_matrix_multip_button = tk.Button(benchmark_buttons_frame, text="Compute Matrix Multiplication", command=compute_matrix_multip, bg="#d0d0d0", font=button_font)
     compute_matrix_multip_button.pack(pady=5)
+
+    def matLabel():
+        resultMat_label.config(text="", bg="#9300FF", font=text_font)
 
     resultMat_label = tk.Label(content2, text="", bg="#9300FF", font=text_font)
     resultMat_label.pack(pady=5)

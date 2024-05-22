@@ -1,8 +1,5 @@
 import time
 import mpmath
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('TkAgg')
 
 start_benchmark = 1000
 start_benchmark = int(start_benchmark)

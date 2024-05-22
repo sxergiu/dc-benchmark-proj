@@ -4,9 +4,6 @@ import multiprocessing
 import randomMatrixGen as matrixGen
 import MatrixInversion
 import MatrixTransposition
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('TkAgg')
 
 
 number_of_tests = 20

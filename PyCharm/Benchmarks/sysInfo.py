@@ -1,80 +1,91 @@
 import platform
 import subprocess
+import psutil
 
-def get_processor():
-    system = platform.system()
-    if system == "Windows":
-        try:
-            output = subprocess.check_output(["wmic", "cpu", "get", "name"]).decode().strip().split("\n")[1]
-            return output
-        except Exception as e:
-            return str(e)
-    else:
-        processor_info = platform.processor()
-        if "Intel" in processor_info:
-            model = processor_info.split(" ")[3:]
-            return " ".join(model)
-        elif "AMD" in processor_info:
-            model = processor_info.split(" ")[2:]
-            return " ".join(model)
-        else:
-            return processor_info
-
-def get_operating_system():
-    system = platform.system()
-    if system == "Windows":
+def get_os_info():
+    """Get the operating system information."""
+    os_info = platform.system()
+    if os_info == "Windows":
         try:
             release = platform.release()
-            if release == "11":
-                return "Windows 11"
-            else:
-                return f"Windows {release}"
+            version = platform.version()
+            return f"Windows {release} (Version {version})"
         except Exception as e:
-            return "Unknown Windows Version"
-    else:
-        return system
-
-def get_total_ram():
-    import psutil
-    return f"{psutil.virtual_memory().total / (1024 ** 3):.2f} GB"
-
-def get_gpu():
-    try:
-        import pycuda.driver as cuda
-        cuda.init()
-        device = cuda.Device(0)
-        return device.name().strip()
-    except ImportError:
-        print("pycuda is not installed.")
-    except Exception as e:
-        print(f"Error with pycuda: {e}")
-
-    # Try to detect Intel GPU using platform module on Windows
-    if platform.system() == "Windows":
+            return f"Error getting Windows version: {e}"
+    elif os_info == "Linux":
         try:
-            output = subprocess.check_output(["wmic", "path", "win32_videocontroller", "get", "name"]).decode().strip().split("\n")[1]
-            return output
+            distro = platform.linux_distribution()
+            return f"{distro[0]} {distro[1]} {distro[2]}"
+        except AttributeError:
+            return "Linux (specific distribution detection not supported)"
         except Exception as e:
-            print(f"Error with platform module: {e}")
+            return f"Error getting Linux distribution: {e}"
+    elif os_info == "Darwin":
+        try:
+            mac_ver = platform.mac_ver()
+            return f"macOS {mac_ver[0]}"
+        except Exception as e:
+            return f"Error getting macOS version: {e}"
+    else:
+        return f"Unsupported OS: {os_info}"
 
-    return "No GPU detected"
+def get_ram_info():
+    """Get the total RAM information."""
+    try:
+        total_ram = psutil.virtual_memory().total
+        return f"{total_ram / (1024 ** 3):.2f} GB"
+    except Exception as e:
+        return f"Error getting RAM information: {e}"
 
-def getSpecs():
-    processor_info = get_processor()
-    os_info = get_operating_system()
-    ram_info = get_total_ram()
-    gpu_info = get_gpu()
+def get_cpu_info():
+    """Get the CPU information."""
+    try:
+        cpu_info = platform.processor()
+        if not cpu_info:  # If platform.processor() returns an empty string
+            cpu_info = subprocess.check_output(["lscpu"]).decode().strip().split("\n")
+            cpu_info = [line for line in cpu_info if "Model name:" in line][0].split(":")[1].strip()
+        return cpu_info
+    except Exception as e:
+        return f"Error getting CPU information: {e}"
 
-    specs = (f"Processor Model: {processor_info}\n"
-             f"Operating System: {os_info}\n"
-             f"Total RAM: {ram_info}\n"
-             f"GPU: {gpu_info}")
+def get_gpu_info():
+    """Get the GPU information."""
+    os_info = platform.system()
+    if os_info == "Windows":
+        try:
+            output = subprocess.check_output(["wmic", "path", "win32_videocontroller", "get", "name"]).decode().strip().split("\n")
+            return ", ".join([line.strip() for line in output if line.strip()][1:])
+        except Exception as e:
+            return f"Error getting GPU information on Windows: {e}"
+    elif os_info == "Linux":
+        try:
+            output = subprocess.check_output(["lspci", "-nnk"]).decode().strip().split("\n")
+            gpu_lines = [line for line in output if "VGA compatible controller" in line]
+            return ", ".join(gpu_lines)
+        except Exception as e:
+            return f"Error getting GPU information on Linux: {e}"
+    elif os_info == "Darwin":  # macOS
+        try:
+            output = subprocess.check_output(["system_profiler", "SPDisplaysDataType"]).decode().strip().split("\n")
+            gpu_lines = [line.strip() for line in output if "Chipset Model" in line]
+            return ", ".join(gpu_lines)
+        except Exception as e:
+            return f"Error getting GPU information on macOS: {e}"
+    else:
+        return "No GPU detected or unsupported operating system"
 
-    return specs
+def get_system_info():
+    """Get all system information."""
+    os_info = get_os_info()
+    ram_info = get_ram_info()
+    cpu_info = get_cpu_info()
+    gpu_info = get_gpu_info()
+
+    return f"Operating System: {os_info}\nTotal RAM: {ram_info}\nCPU: {cpu_info}\nGPU: {gpu_info}"
+
+
+
 
 if __name__ == "__main__":
+    print(get_system_info())
 
-    print("Processor Model:", get_processor())
-    print("Operating System:", get_operating_system())
-    print("Total RAM:", get_total_ram())
-    print("GPU:", get_gpu())

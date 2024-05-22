@@ -1,17 +1,13 @@
 import matplotlib.pyplot as plt
 import digitsOfPi as dop
+import matplotlib
+matplotlib.use('TkAgg')
 
 def plotMat(times, number_of_tests):
-
-    x_axis = []
-    y_axis = []
-    for x_value in range(1, number_of_tests + 1):
-        x_axis.append(x_value)
-    for y_value in times:
-        y_axis.append(y_value)
-
     x_axis = list(range(1, number_of_tests + 1))
-    y_axis = times
+
+    # Ensure y_axis doesn't exceed 100
+    y_axis = [min(time, 100) for time in times]
 
     fig, ax = plt.subplots()
     ax.plot(x_axis, y_axis, label="Time per Test")
