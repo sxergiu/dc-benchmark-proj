@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import threading
-
+import Score as sc
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import displayHistory as hs
@@ -13,7 +13,7 @@ import plotting as plot
 from PIL import Image, ImageTk
 
 if __name__ == '__main__':
-    image = Image.open("PyCharm\\Benchmarks\\islam.png")
+    image = Image.open("islam.png")
     image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
 
     specsString, specsInfo = cs.get_system_info()
@@ -159,6 +159,8 @@ if __name__ == '__main__':
         compute_matrix_multip_button.config(state=tk.NORMAL)
 
     def compute_score():
+        score = sc.score()
+        specsInfo.append(score)
         cs.write_in_file(specsInfo)
 
     content2 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")

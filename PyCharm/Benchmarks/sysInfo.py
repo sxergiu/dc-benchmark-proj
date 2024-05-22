@@ -4,6 +4,7 @@ import psutil
 import os
 import pandas as pd
 
+
 def get_os_info():
     """Get the operating system information."""
     os_info = platform.system()
@@ -82,11 +83,10 @@ def get_system_info():
     ram_info = get_ram_info()
     cpu_info = get_cpu_info()
     gpu_info = get_gpu_info()
-    score = 0
 
-    info = [ os_info, cpu_info, ram_info, gpu_info, score ]
+    info = [ os_info, cpu_info, ram_info, gpu_info ]
 
-    return f"Operating System: {os_info}\nCPU: {cpu_info}\nTotal RAM: {ram_info}\nGPU: {gpu_info}\nScore: {score}\n",info
+    return f"Operating System: {os_info}\nCPU: {cpu_info}\nTotal RAM: {ram_info}\nGPU: {gpu_info}\n",info
 
 
 def write_in_file(info):

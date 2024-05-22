@@ -20,6 +20,7 @@ def score():
     total_score = normalized_avg_mat * 0.6 + normalized_avg_pi * 0.3 + time_for_pi_digits * 0.1
 
     print("Score(t) ", total_score * 100)
+    return total_score*100
 
 if __name__ == "__main__":
     score()
