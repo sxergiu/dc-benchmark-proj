@@ -11,14 +11,12 @@ import sysInfo as cs
 import ramRWSpeed as rw
 import plotting as plot
 from PIL import Image, ImageTk
-import benchmark as bk
-
 
 if __name__ == '__main__':
     image = Image.open("islam.png")
     image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
 
-    specs = cs.get_system_info()
+    specsString, specsInfo = cs.get_system_info()
 
     button_font = ("Lucida Console", 12)
     text_font = ("Tahoma", 14)
@@ -42,6 +40,8 @@ if __name__ == '__main__':
         current_content.pack_forget()
         content.pack(fill=tk.BOTH, expand=True)
         globals()['current_content'] = content
+        if content == content4:
+            updateHistory()
 
     # Define default content
     default_content = tk.Frame(root)
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     # Function to show Pi section
     def show_pi_section():
         display_pi_button.pack_forget()
-        pi_section.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        pi_section.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
         display_rw_button.config(state=tk.DISABLED)
         compute_matrix_multip_button.config(state=tk.DISABLED)
 
@@ -146,7 +146,7 @@ if __name__ == '__main__':
     # Function to show Read/Write Speed section
     def show_rw_section():
         display_rw_button.pack_forget()
-        rw_section.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        rw_section.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
         display_pi_button.config(state=tk.DISABLED)
         compute_matrix_multip_button.config(state=tk.DISABLED)
 
@@ -157,17 +157,38 @@ if __name__ == '__main__':
         display_pi_button.config(state=tk.NORMAL)
         compute_matrix_multip_button.config(state=tk.NORMAL)
 
+    def compute_score():
+        cs.write_in_file(specsInfo)
+
     content2 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
 
+    # Frame for Compute Performance label and Run Benchmark button
+    compute_run_frame = tk.Frame(content2, bg="#9300FF",bd=20, relief="groove")
+    compute_run_frame.pack(fill=tk.X, padx=20, pady=20)
+
+    # Compute Performance label
+    compute_performance_label = tk.Label(compute_run_frame, text="Compute Performance", font=text_font, bg="#9300FF", bd=15, relief="groove")
+    compute_performance_label.pack(side=tk.LEFT)
+
+    # Run Benchmark button
+    run_benchmark_button = tk.Button(compute_run_frame, text="Run The Unnamed Benchmark", command=compute_score,
+                                     bg="#d0d0d0", font=button_font, bd=5)
+    run_benchmark_button.pack(side=tk.RIGHT)
+
     # Benchmark buttons frame
+
     background_label = tk.Label(default_content, image=bg_image)
     background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
     benchmark_buttons_frame = tk.Frame(content2, bg="#9300FF")
     benchmark_buttons_frame.pack()
 
+    compute_performance_label = tk.Label(benchmark_buttons_frame, text="Individual Benchmarks", font=text_font, bg="#9300FF",
+                                         bd=15, relief="groove")
+    compute_performance_label.pack(side=tk.TOP)
+
     # Matrix Multiplication section
-    compute_matrix_multip_button = tk.Button(benchmark_buttons_frame, text="Compute Matrix Multiplication", command=compute_matrix_multip, bg="#d0d0d0", font=button_font)
+    compute_matrix_multip_button = tk.Button(benchmark_buttons_frame, text="Compute Matrix Multiplication", command=compute_matrix_multip, bg="#d0d0d0", font=button_font,bd=5)
     compute_matrix_multip_button.pack(pady=5)
 
     def matLabel():
@@ -177,11 +198,11 @@ if __name__ == '__main__':
     resultMat_label.pack(pady=5)
 
     # Button to display Pi section
-    display_pi_button = tk.Button(benchmark_buttons_frame, text="Pi", command=show_pi_section, bg="#d0d0d0", font=button_font)
+    display_pi_button = tk.Button(benchmark_buttons_frame, text="Pi", command=show_pi_section, bg="#d0d0d0", font=button_font,bd=5)
     display_pi_button.pack(pady=5)
 
     # Pi section
-    pi_section = tk.Frame(content2, borderwidth=2, bg="#ffffff", bd=2, relief="groove")
+    pi_section = tk.Frame(content2, borderwidth=2, bg="#ffffff", bd=20, relief="groove")
 
     digits_label = tk.Label(pi_section, text="Enter the number of digits of Pi to calculate:", font=text_font, bg="#ffffff")
     digits_label.pack()
@@ -202,16 +223,16 @@ if __name__ == '__main__':
     cancel_pi_button.pack(pady=5)
 
     # Button to display Read/Write Speed section
-    display_rw_button = tk.Button(benchmark_buttons_frame, text="Read/Write Speed", command=show_rw_section, bg="#d0d0d0", font=button_font)
+    display_rw_button = tk.Button(benchmark_buttons_frame, text="Read/Write Speed", command=show_rw_section, bg="#d0d0d0", font=button_font, bd=5)
     display_rw_button.pack(pady=5)
 
     # Read/Write Speed section
-    rw_section = tk.Frame(content2, borderwidth=2, bg="#ffffff", bd=2, relief="groove")
+    rw_section = tk.Frame(content2, borderwidth=2, bg="#ffffff", bd=20, relief="groove")
 
     mb_label = tk.Label(rw_section, text="Enter the number of MB to benchmark:", font=text_font, bg="#ffffff")
     mb_label.pack()
 
-    mb_entry = tk.Entry(rw_section, font=("Arial", 12))
+    mb_entry = tk.Entry(rw_section, font=text_font)
     mb_entry.pack()
 
     compute_speed_button = tk.Button(rw_section, text="Compute Read/Write Speed", command=compute_rw, bg="#d0d0d0", font=button_font)
@@ -224,17 +245,25 @@ if __name__ == '__main__':
     cancel_rw_button.pack(pady=5)
 
     # Content 3 - Computer Specs
-    content3 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
-    label3 = tk.Label(content3, text='Current Specs: \n' + str(specs), font=text_font, bg="#ffffff")
+    content3 = tk.Frame(root, bg="#9300FF", bd=150, relief="groove")
+    label3 = tk.Label(content3, text='Current Specs: \n' + str(specsString), font=text_font, bg="#ffffff")
     label3.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
     # Content 4 - History
+
+    def updateHistory():
+        history_entries = hs.read_history_csv()
+        # Insert data into the Treeview
+        if history_entries:
+            for entry in history_entries:
+                tree.insert("", "end", values=entry)
+
     content4 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
-    label4 = tk.Label(content4, text='History', font=text_font, bg="#ffffff")
-    label4.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    label4 = tk.Label(content4, text='History', font=text_font, bg="#9300FF",bd=10, relief="groove")
+    label4.pack(fill=tk.BOTH, expand=False)
 
     style = ttk.Style()
-    style.configure("Treeview", background="#9300FF", font=text_font, borderwidth=2, relief="groove")
+    style.configure("Treeview", background="#d0d0d0", font=text_font, borderwidth=2, relief="groove")
     tree = ttk.Treeview(content4, columns=("OS", "RAM", "CPU", "GPU", "SCORE"), show="headings",style="Treeview")
 
     tree.heading("OS", text="OS")
@@ -243,11 +272,11 @@ if __name__ == '__main__':
     tree.heading("GPU", text="GPU")
     tree.heading("SCORE", text="SCORE")
 
-    history_entries = hs.read_history_csv()
-    # Insert data into the Treeview
-    if history_entries:
-        for entry in history_entries:
-            tree.insert("", "end", values=entry)
+    tree.column("OS", anchor=tk.CENTER, width=5)
+    tree.column("RAM", anchor=tk.CENTER, width=5)
+    tree.column("CPU", anchor=tk.CENTER, width=150)
+    tree.column("GPU", anchor=tk.CENTER, width=150)
+    tree.column("SCORE", anchor=tk.CENTER, width=5)
 
     # Pack the Treeview
     tree.pack(expand=True, fill="both")
@@ -280,7 +309,7 @@ if __name__ == '__main__':
     exit_button.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
 
     # Bind hover effects to buttons
-    buttons = [button1, button2, button3, button4, exit_button, compute_matrix_multip_button, display_pi_button, compute_pi_button, compute_pi_button2, cancel_pi_button, display_rw_button, compute_speed_button, cancel_rw_button]
+    buttons = [button1, button2, button3, button4, exit_button, compute_matrix_multip_button, display_pi_button, compute_pi_button, compute_pi_button2, cancel_pi_button, display_rw_button, compute_speed_button, cancel_rw_button,run_benchmark_button]
     for btn in buttons:
         btn.bind("<Enter>", on_enter)
         btn.bind("<Leave>", on_leave)

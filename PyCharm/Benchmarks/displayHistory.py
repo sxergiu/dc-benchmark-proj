@@ -20,14 +20,14 @@ def read_history_csv():
         # Iterate over each row in the CSV file
         for row in csv_reader:
             # Extract information from the row
-            os_info = row["OS"]
-            ram_info = row["RAM"]
+            os_info = row["Operating system"]
             cpu_info = row["CPU"]
+            ram_info = row["Total RAM"]
             gpu_info = row["GPU"]
             score_info = row["SCORE"]
 
             # Store the information as a tuple
-            entry = (os_info, ram_info, cpu_info, gpu_info, score_info)
+            entry = (os_info,cpu_info, ram_info, gpu_info, score_info)
 
             # Append the entry to the array
             entries.append(entry)
