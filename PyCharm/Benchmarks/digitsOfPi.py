@@ -2,7 +2,7 @@ import time
 import mpmath
 import matplotlib.pyplot as plt
 
-start_benchmark = 10000
+start_benchmark = 1000
 start_benchmark = int(start_benchmark)
 repeat_benchmark = 10
 repeat_benchmark = int(10)

@@ -6,7 +6,7 @@ import MatrixInversion
 import MatrixTransposition
 import matplotlib.pyplot as plt
 
-number_of_tests = 20
+number_of_tests = 4
 
 """ takes from array_of_mat tuples from current index to i + chunk_size - 1
     and stores them inside an array of matrices which is matrix_chunk

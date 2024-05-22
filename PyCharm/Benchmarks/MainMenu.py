@@ -6,7 +6,7 @@ import sysInfo as cs
 import ramRWSpeed as rw
 from PIL import Image, ImageTk
 
-image = Image.open("islam.png")
+image = Image.open("C:\\Users\\cristi\\Desktop\\DC_project\\dc-benchmark-proj\\PyCharm\\Benchmarks\\islam.png")
 image = image.resize((1200, 600))  # Use Image.LANCZOS for high-quality resizing
 
 specs = cs.getSpecs()
