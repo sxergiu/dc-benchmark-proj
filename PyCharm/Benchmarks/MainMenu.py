@@ -40,13 +40,11 @@ default_content = tk.Frame(root)
 background_label = tk.Label(default_content, image=bg_image)
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-#default_label = tk.Label(default_content, text='"The Unnamed Benchmark" is a comprehensive application developed by a group of students\n aimed at benchmarking computer system\'s RAM and CPU performance.\n The application employs various computational tasks to evaluate system capabilities,\n including matrix multiplication, inversions, and transpositions,\nalong with sequential and random reading and writing operations.\n Additionally, the application incorporates computations involving\n digits of pi to further stress test the system\'s processing capabilities. \nBy executing these tasks, users can gain insights into their system\'s performance under different\ncomputational workloads, aiding in system optimization and performance tuning.', font=text_font, bg="#ffffff")
-#default_label.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 # Content 1 - About the App
 content1 = tk.Frame(root, bg="#9300FF", bd=2, relief="groove")
 
-label1 = tk.Label(content1, text='Metodele de benchmark folosite/ cum functioneaza scorul', font=text_font, bg='white')
+label1 = tk.Label(content1, text='Metodele de benchmark folosite/ cum functioneaza scorul', font=text_font, bg='#9300FF')
 label1.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
 # Content 2 - Benchmarking
