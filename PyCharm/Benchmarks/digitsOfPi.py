@@ -1,6 +1,5 @@
 import time
 import mpmath
-import matplotlib.pyplot as plt
 
 start_benchmark = 1000
 start_benchmark = int(start_benchmark)
@@ -43,21 +42,8 @@ def powers_of_pi(digits):
         print('Time: ' + str(duration) + 's')
     average = round(average / repeat_benchmark, 3)
     print('Average (from {} repeats): {}s'.format(repeat_benchmark, average))
-    graph_plot(times)
+    return times
 
-def graph_plot(times):
-    x_axis = []
-    y_axis = []
-
-    for iteration in range(1, repeat_benchmark + 1):
-        x_axis.append(iteration)
-    for time in times:
-        y_axis.append(time)
-    plt.plot(x_axis, y_axis)
-    plt.xlabel("x axix")
-    plt.ylabel("y axis")
-    plt.title("Pi operations results")
-    plt.show()
     
 if __name__ == "__main__":
     digits = int(input("Enter the number of digits of Pi to calculate: "))

@@ -4,7 +4,7 @@ import multiprocessing
 import randomMatrixGen as matrixGen
 import MatrixInversion
 import MatrixTransposition
-import matplotlib.pyplot as plt
+
 
 number_of_tests = 4
 
@@ -43,3 +43,25 @@ def compute_dot_product(chunk, result_queue):
         #print("This is a matrix pair: " + '\n' + str(matrix_pair) + '\n')  
     result = np.dot(chunk[0], chunk[1])
     result_queue.append(result)
+
+def mat():
+    times = []
+    cnt = 0
+    sum = 0
+
+    for _ in range(number_of_tests):
+        array_of_mat = matrixGen.generate_matrices()
+        start = time.perf_counter()
+        generate_chunks(array_of_mat)
+        MatrixInversion.inverse_matrix_parallel(array_of_mat)
+        MatrixTransposition.transpose_matrix_parallel(array_of_mat)
+        end = time.perf_counter()
+        cnt += 1
+        sum += end - start
+        times.append(end - start)
+    print("Time spent: ", sum)
+    print("Average time is: ", sum / cnt)
+    return times
+
+if __name__ == "__main__":
+    mat()

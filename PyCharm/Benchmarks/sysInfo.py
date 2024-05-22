@@ -19,8 +19,20 @@ def get_os_info():
             distro = platform.linux_distribution()
             return f"{distro[0]} {distro[1]} {distro[2]}"
         except AttributeError:
+            release = platform.release()
+            version = platform.version()
+            return f"Windows {release} (Version {version})"
+        except Exception as e:
+            return f"Error getting Windows version: {e}"
+    elif os_info == "Linux":
+        try:
+            distro = platform.linux_distribution()
+            return f"{distro[0]} {distro[1]} {distro[2]}"
+        except AttributeError:
             return "Linux (specific distribution detection not supported)"
         except Exception as e:
+            return f"Error getting Linux distribution: {e}"
+    elif os_info == "Darwin":
             return f"Error getting Linux distribution: {e}"
     elif os_info == "Darwin":
         try:
@@ -47,6 +59,24 @@ def get_cpu_info():
             cpu_info = subprocess.check_output(["lscpu"]).decode().strip().split("\n")
             cpu_info = [line for line in cpu_info if "Model name:" in line][0].split(":")[1].strip()
         return cpu_info
+    except:
+        return
+def get_ram_info():
+    """Get the total RAM information."""
+    try:
+        total_ram = psutil.virtual_memory().total
+        return f"{total_ram / (1024 ** 3):.2f} GB"
+    except Exception as e:
+        return f"Error getting RAM information: {e}"
+
+def get_cpu_info():
+    """Get the CPU information."""
+    try:
+        cpu_info = platform.processor()
+        if not cpu_info:  # If platform.processor() returns an empty string
+            cpu_info = subprocess.check_output(["lscpu"]).decode().strip().split("\n")
+            cpu_info = [line for line in cpu_info if "Model name:" in line][0].split(":")[1].strip()
+        return cpu_info
     except Exception as e:
         return f"Error getting CPU information: {e}"
 
@@ -54,7 +84,29 @@ def get_gpu_info():
     """Get the GPU information."""
     os_info = platform.system()
     if os_info == "Windows":
+        return f"Error getting CPU information: {e}"
+
+def get_gpu_info():
+    """Get the GPU information."""
+    os_info = platform.system()
+    if os_info == "Windows":
         try:
+            output = subprocess.check_output(["wmic", "path", "win32_videocontroller", "get", "name"]).decode().strip().split("\n")
+            return ", ".join([line.strip() for line in output if line.strip()][1:])
+        except Exception as e:
+            return f"Error getting GPU information on Windows: {e}"
+    elif os_info == "Linux":
+        try:
+            output = subprocess.check_output(["lspci", "-nnk"]).decode().strip().split("\n")
+            gpu_lines = [line for line in output if "VGA compatible controller" in line]
+            return ", ".join(gpu_lines)
+        except Exception as e:
+            return f"Error getting GPU information on Linux: {e}"
+    elif os_info == "Darwin":  # macOS
+        try:
+            output = subprocess.check_output(["system_profiler", "SPDisplaysDataType"]).decode().strip().split("\n")
+            gpu_lines = [line.strip() for line in output if "Chipset Model" in line]
+            return ", ".join(gpu_lines)
             output = subprocess.check_output(["wmic", "path", "win32_videocontroller", "get", "name"]).decode().strip().split("\n")
             return ", ".join([line.strip() for line in output if line.strip()][1:])
         except Exception as e:
