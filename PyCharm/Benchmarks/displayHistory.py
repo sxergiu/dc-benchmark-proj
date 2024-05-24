@@ -5,7 +5,7 @@ import os
 
 def read_history_csv():
     # Check if "History.csv" exists in the current directory
-    if not os.path.exists("History.csv"):
+    if not os.path.exists("PyCharm/Benchmarks/History.csv"):
         print("History.csv not found in the project directory.")
         return None
 
@@ -13,7 +13,7 @@ def read_history_csv():
     entries = []
 
     # Open the CSV file for reading
-    with open("History.csv", "r") as file:
+    with open("PyCharm/Benchmarks/History.csv", "r") as file:
         # Create a CSV reader object
         csv_reader = csv.DictReader(file)
 

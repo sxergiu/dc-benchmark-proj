@@ -91,7 +91,7 @@ def get_system_info():
 
 def write_in_file(info):
     header = ['Operating system', 'CPU', 'Total RAM', 'GPU', 'SCORE']
-    file_path = "History.csv"
+    file_path = "PyCharm/Benchmarks/History.csv"
 
     # Check if the file exists
     file_exists = os.path.exists(file_path)

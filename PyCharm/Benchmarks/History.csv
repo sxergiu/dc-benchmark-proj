@@ -1,2 +1,4 @@
 Operating system,CPU,Total RAM,GPU,SCORE
 Windows 10 (Version 10.0.22631),"Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",7.70 GB,Intel(R) Iris(R) Xe Graphics,71.55874792831311
+Linux (specific distribution detection not supported),x86_64,15.53 GB,01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2060 SUPER] [10de:1f06] (rev a1),57.53651870189953
+Linux (specific distribution detection not supported),x86_64,15.53 GB,01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2060 SUPER] [10de:1f06] (rev a1),69.55407366870126
